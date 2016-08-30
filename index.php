@@ -17,6 +17,9 @@
 
 		var mymap = L.map('mapid').setView([55.953252, -3.188267], 7);
 
+		var rspbicon = L.icon({iconUrl: 'rspb-icon.png'});
+		var ntsicon = L.icon({iconUrl: 'nts-icon.png'});
+
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -27,38 +30,17 @@
 
 		$.getJSON( "getdata.php", function( data ) {
 			$.each( data, function( key, val ) {
-				L.marker([val.point.lat, val.point.long]).addTo(mymap)
-					.bindPopup(val.name).openPopup();
+				$.each(val.rspb, function( innerkey, innerval) {
+					L.marker([innerval.point.lat, innerval.point.long], {icon: rspbicon}).addTo(mymap)
+						.bindPopup(innerval.name).openPopup();
+				});
+
+				$.each(val.nts, function( innerkey, innerval) {
+					L.marker([innerval.point.lat, innerval.point.long], {icon: ntsicon}).addTo(mymap)
+						.bindPopup(innerval.name).openPopup();
+				});
 			 });
 		});
-
-		/*L.marker([51.5, -0.09]).addTo(mymap)
-
-
-		L.circle([51.508, -0.11], 500, {
-			color: 'red',
-			fillColor: '#f03',
-			fillOpacity: 0.5
-		}).addTo(mymap).bindPopup("I am a circle.");
-
-		L.polygon([
-			[51.509, -0.08],
-			[51.503, -0.06],
-			[51.51, -0.047]
-		]).addTo(mymap).bindPopup("I am a polygon.");
-
-
-		var popup = L.popup();
-
-		function onMapClick(e) {
-			popup
-				.setLatLng(e.latlng)
-				.setContent("You clicked the map at " + e.latlng.toString())
-				.openOn(mymap);
-		}
-
-		mymap.on('click', onMapClick);*/
-
 	</script>
 </body>
 </html>
