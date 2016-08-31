@@ -19,6 +19,7 @@
 
 		var rspbicon = L.icon({iconUrl: 'rspb-icon.png'});
 		var ntsicon = L.icon({iconUrl: 'nts-icon.png'});
+		var hesicon = L.icon({iconUrl: 'hes-icon.png'});
 
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
 			maxZoom: 18,
@@ -37,6 +38,11 @@
 
 				$.each(val.nts, function( innerkey, innerval) {
 					L.marker([innerval.point.lat, innerval.point.long], {icon: ntsicon}).addTo(mymap)
+						.bindPopup(innerval.name).openPopup();
+				});
+
+				$.each(val.hes, function( innerkey, innerval) {
+					L.marker([innerval.point.lat, innerval.point.long], {icon: hesicon}).addTo(mymap)
 						.bindPopup(innerval.name).openPopup();
 				});
 			 });
