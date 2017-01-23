@@ -9,11 +9,6 @@
 	<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
 </head>
 <body>
-<form>
-<label>Historic Environment Scotland<input checked="checked" type="checkbox" name="togglepins[]" value="hes" class="grouptoggle"/></label>
-<label>Royal Society Protection Birds<input checked="checked" type="checkbox" name="togglepins[]" value="rspb" class="grouptoggle"/></label>
-<label>National Trust Scotland<input checked="checked" type="checkbox" name="togglepins[]" value="nts" class="grouptoggle"/></label>
-</form>
 	<div id="mapid" style="width: 800px; height: 800px"></div>
 
 	<script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
@@ -63,13 +58,17 @@
 			 });
 		});
 
-		$(".grouptoggle").on("click", function() {
-			if (!this.checked) {
-				mymap.removeLayer(eval(this.value + "group"));
-			} else {
-				eval(this.value + "group").addTo(mymap);
-			}
-		});
+		var baseMaps = {
+		   
+		};
+
+		var overlayMaps = {
+			"RSPB": rspbgroup,
+		    "HES": hesgroup,
+		    "NTS": ntsgroup
+		};
+
+		L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 	</script>
 </body>
 </html>
